@@ -1,6 +1,13 @@
 # Django settings for pusher_chat project.
+import os
+import sys
+import urlparse
 
 DEBUG = True
+
+if os.environ.get('DEBUG') == 'False':
+    DEBUG = False
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -11,8 +18,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'db.sqlite3',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -119,6 +126,16 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'chat',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
 )
 
 # A sample logging configuration. The only tangible logging
@@ -149,3 +166,17 @@ try:
     INSTALLED_APPS += ('gunicorn',)
 except ImportError:
     pass
+
+
+PUSHER_APP_ID = '10075'
+PUSHER_KEY = '621aa4b4b38e235a9cd8'
+PUSHER_SECRET = '77722ee999acd7e3954d'
+
+try:
+    if os.environ.has_key('PUSHER_URL'):
+        url = urlparse.urlparse(os.environ['PUSHER_URL'])
+        PUSHER_APP_ID = url.path.split('/')[-1]
+        PUSHER_KEY = url.username
+        PUSHER_SECRET = url.password
+except:
+    print "Unexpected error:", sys.exc_info()
