@@ -143,3 +143,9 @@ LOGGING = {
         },
     }
 }
+
+try:
+    import gunicorn
+    INSTALLED_APPS += ('gunicorn',)
+except ImportError:
+    pass
