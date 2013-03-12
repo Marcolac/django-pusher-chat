@@ -10,17 +10,11 @@ pusher.secret = settings.PUSHER_SECRET
 
 p = pusher.Pusher()
 
-def home(request):
-    if not request.session.get('user'):
-        request.session['user'] = 'user-%s' % request.session.session_key
-    return render_to_response('chat/home.html', {
-        'PUSHER_KEY': settings.PUSHER_KEY,
-    }, RequestContext(request)) 
-
 def message(request):
-    if request.session.get('user') and request.POST.get('message'):
+    if request.method == 'GET':
         p['chat'].trigger('message', {
-            'message': request.POST.get('message'),
-            'user': request.session['user'],
+            'val': request.GET.get('val'),
+            'name': request.GET.get('name'),
         })
-    return HttpResponse('')
+
+    return HttpResponse('blabla', content_type="text/javascript")

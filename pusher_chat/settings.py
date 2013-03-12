@@ -168,9 +168,9 @@ except ImportError:
     pass
 
 
-PUSHER_APP_ID = '10075'
-PUSHER_KEY = '621aa4b4b38e235a9cd8'
-PUSHER_SECRET = '77722ee999acd7e3954d'
+PUSHER_APP_ID = '39188'
+PUSHER_KEY = '612407294fb42f0b1cab'
+PUSHER_SECRET = '02084a0503ccc5744f17'
 
 try:
     if os.environ.has_key('PUSHER_URL'):
