@@ -17,4 +17,4 @@ def message(request):
             'name': request.GET.get('name'),
         })
 
-    return HttpResponse('blabla', content_type="text/javascript")
+    return HttpResponse("%s(true);" % request.GET.get('callback'), content_type="text/javascript")
