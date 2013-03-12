@@ -13,7 +13,8 @@ p = pusher.Pusher()
 def message(request):
     if request.method == 'GET':
         room_id = request.GET.get('id')
-        romm = 'chat' + room_id
+        room_id = str(room_id)
+        room = 'chat' + room_id
         p[room].trigger('message', {
             'val': request.GET.get('val'),
             'name': request.GET.get('name'),
