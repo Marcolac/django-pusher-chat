@@ -21,3 +21,8 @@ def message(request):
         })
 
     return HttpResponse("%s(true);" % request.GET.get('callback'), content_type="text/javascript")
+
+def alert(request):
+    if request.method == 'GET':
+        p['hangout'].trigger('hangout', {})
+    return HttpResponse("%s(true);" % request.GET.get('callback'), content_type="text/javascript")
